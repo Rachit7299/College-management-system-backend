@@ -30,4 +30,49 @@ userRouter.route("/register").post((req, res, next) => {
   
   });
 
+  userRouter.route("/login").post((req,res,next)=>{
+    Users.findOne({username: req.body.username})
+    .then((user)=>{
+      if(!user){
+        res.status(401).end('User Not Found')
+      }
+      else{
+        bcrypt.compare(req.body.pswd,user.pswd,(err, result)=>{
+          if(result == true){
+            let token= jwt.sign({id:user._id},config.secretKey,{expiresIn:'2h'});
+            res.status(200).json({"Login":"True","token":token,"_id":user._id,"privilege":user.privilege});
+          }
+          else{
+            res.status(403).send('Incorrect Password');
+          }
+        })
+      }
+    },((err)=>next(err))
+    ).catch((err)=>next(err));
+  });
+
+  userRouter.route("/getAll").get((req,res,next)=>{
+    Users.find({})
+    .then((user)=>{
+      res.status(200).json(user);
+    },((err)=>next(err))
+    ).catch((err)=>next(err));
+  });
+
+  userRouter.route("/getuser/:id").get((req,res,next)=>{
+    Users.findOne({_id:req.params.id})
+    .then((user)=>{
+      res.status(200).json(user);
+    },((err)=>next(err))
+    ).catch((err)=>next(err));
+  });
+
+  userRouter.route("/delete/:id").delete((req,res,next)=>{
+    Users.deleteOne({_id:req.params.id})
+    .then((user)=>{
+      res.status(200).send("Deletion Successfull");
+    },((err)=>next(err))
+    ).catch((err)=>next(err));
+  })
+
   module.exports=userRouter;
