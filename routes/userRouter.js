@@ -75,4 +75,12 @@ userRouter.route("/register").post((req, res, next) => {
     ).catch((err)=>next(err));
   })
 
+  userRouter.route("/update/:id").patch((req,res,next)=>{
+    Users.findByIdAndUpdate(req.params.id,req.body)
+    .then((user)=>{
+      res.status(200).json(user);
+    },((err)=>next(err))
+    ).catch((err)=>next(err));
+  })
+
   module.exports=userRouter;
