@@ -6,10 +6,11 @@ var logger = require('morgan');
 const mongoose = require('mongoose');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var userRouter = require('./routes/userRouter')
-var cors = require('cors')
+var userRouter = require('./routes/userRouter');
+var feeRouter = require('./routes/feeRouter')
+var cors = require('cors');
 var app = express();
-const connect = mongoose.connect("mongodb+srv://Rachit:Rachit123@cluster0.72h9y.mongodb.net/collegeServer?retryWrites=true&w=majority",{ useNewUrlParser: true });
+const connect = mongoose.connect("mongodb+srv://Rachit:Rachit123@cluster0.72h9y.mongodb.net/collegeServer?retryWrites=true&w=majority",{ useNewUrlParser: true ,'useFindAndModify': false});
 
 connect.then((db) => {
   console.log("Connected correctly to server");
@@ -35,6 +36,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/user', userRouter);
+app.use('/fees',feeRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

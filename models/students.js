@@ -1,4 +1,3 @@
-const { TooManyRequests } = require('http-errors');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -25,6 +24,52 @@ const addressSchema = new Schema({
     }
 })
 
+const personelSchema = new Schema({
+    father_name:{
+        type:String,
+        required:true
+    },
+    mother_name:{
+        type: String,
+        required: true
+    },
+    age:{
+        type:Number,
+        required:true
+    },
+    gender:{
+        type:String,
+        required: true
+    },
+    hostel:{
+        type:String,
+        required:true
+    }
+})
+
+const feeSchema = new Schema({
+    tutionfee:{
+        type: Number,
+        required: true
+    },
+    bookfees:{
+        type: Number,
+        required: true
+    },
+    hostelfee:{
+        type: Number,
+        required:true       
+    },
+    totalfee:{
+        type: Number,
+        required: true
+    },
+    paid:{
+        type: String,
+        required: true
+    }
+})
+
 const courseSchema = new Schema({
     semester:{
         type:Number,
@@ -35,7 +80,7 @@ const courseSchema = new Schema({
         required:true
     },
     year:{
-        type:String,
+        type:Number,
         required:true
     },
     roll_no:{
@@ -79,11 +124,13 @@ const studentSchema = new Schema({
         required: true
     },
     address:[addressSchema],
-    course:[courseSchema]
+    course:[courseSchema],
+    personel:[personelSchema],
+    fees:[feeSchema]
 
 }, {
     timestamps:true
 })
 
-var Users = mongoose.model('Students',studentSchema,'studentList');
-module.exports= Users;
+var Students = mongoose.model('Students',studentSchema,'studentList');
+module.exports= Students;
