@@ -7,7 +7,8 @@ const mongoose = require('mongoose');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var userRouter = require('./routes/userRouter');
-var feeRouter = require('./routes/feeRouter')
+var feeRouter = require('./routes/feeRouter');
+var courseRouter = require('./routes/courseRouter');
 var cors = require('cors');
 var app = express();
 const connect = mongoose.connect("mongodb+srv://Rachit:Rachit123@cluster0.72h9y.mongodb.net/collegeServer?retryWrites=true&w=majority",{ useNewUrlParser: true ,'useFindAndModify': false});
@@ -37,6 +38,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/user', userRouter);
 app.use('/fees',feeRouter);
+app.use('/courses',courseRouter)
 
 
 // catch 404 and forward to error handler

@@ -26,6 +26,10 @@ const feeSchema = new Schema({
         type: Number,
         required:true       
     },
+    otherfee:{
+        type:Number,
+        required:true
+    },
     totalfee:{
         type: Number,
         required: true

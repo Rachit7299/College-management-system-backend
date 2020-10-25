@@ -47,7 +47,8 @@ feeRouter.route('/create').post((req,res,next)=>{
                 tutionfee: req.body.tutionfee,
                 bookfees: req.body.bookfees,
                 hostelfee: req.body.hostelfee,
-                totalfee: req.body.tutionfee+req.body.hostelfee+req.body.bookfees
+                otherfee: req.body.otherfee,
+                totalfee: req.body.tutionfee+req.body.hostelfee+req.body.bookfees+req.body.otherfee
             })
             .then((f)=>{
                 res.status(200).json({"status":"Update Successfull"});
@@ -61,7 +62,8 @@ feeRouter.route('/create').post((req,res,next)=>{
                 tutionfee: req.body.tutionfee,
                 bookfees: req.body.bookfees,
                 hostelfee: req.body.hostelfee,
-                totalfee: req.body.tutionfee+req.body.hostelfee+req.body.bookfees
+                otherfee: req.body.otherfee,
+                totalfee: req.body.tutionfee+req.body.hostelfee+req.body.bookfees+req.body.otherfee
             })
             .then((f)=>{
                 res.status(200).json(f);
