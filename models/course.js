@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const subjectSchema = new Schema({
+    _id:false,
     subject_code:{
         type:String,
         required: true,
@@ -12,6 +13,10 @@ const subjectSchema = new Schema({
         required: true
     },
     subject_type:{
+        type:String,
+        required:true
+    },
+    subject_branch:{
         type:String,
         required:true
     },
@@ -29,6 +34,14 @@ const subjectSchema = new Schema({
     }
 })
 
+const branchSchema = new Schema({
+    _id:false,
+    branch_name:{
+        type:String,
+        required:true
+    }
+})
+
 const courseSchema = new Schema({
     code:{
         type:String,
@@ -37,7 +50,8 @@ const courseSchema = new Schema({
     },
     name:{
         type:String,
-        required: true
+        required: true,
+        unique:true
     },
     duration:{
         type:Number,
@@ -47,7 +61,8 @@ const courseSchema = new Schema({
         type:Number,
         required:true
     },
-    subjects:[subjectSchema]
+    subjects:[subjectSchema],
+    branches:[branchSchema]
 },{
     timestamps:true
 })
