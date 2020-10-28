@@ -128,7 +128,7 @@ courseRouter.route('/add-subject/:id').post((req,res,next)=>{
 })
 
 courseRouter.route('/get-years').get((req,res,next)=>{
-    Courses.find({name:req.query.name})
+    Courses.findOne({name:req.query.name})
     .then((course)=>{
         if(course!=null){
             res.status(200).json(course.duration);
