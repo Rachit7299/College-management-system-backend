@@ -174,7 +174,20 @@ courseRouter.route('/find-course/:name').get((req,res,next)=>{
     .catch((err) => next(err))
 })
 
-courseRouter.route('/del-subject/:id&:c_name').delete((req,res,next)=>{
+courseRouter.route('/update-course/:name').post((req,res,next)=>{
+    Courses.findOneAndUpdate({name: req.params.name},{
+        code: req.body.code,
+        name: req.body.name,
+        duration: req.body.duration,
+        semesters: req.body.semesters, 
+    })
+    .then((cr)=>{
+        res.status(200).send('Course Updated');
+    }, (err) => next(err))
+    .catch((err) => next(err))
+})
+
+courseRouter.route('/del-subject/:id&:c_name&:b_name').delete((req,res,next)=>{
     Courses.findOne({_id:req.params.id})
     .then((course)=>{
         if(course!=null){
@@ -194,5 +207,39 @@ courseRouter.route('/del-subject/:id&:c_name').delete((req,res,next)=>{
     );
 })
 
+courseRouter.route('/get-core-subjects/:name&:b_name&:s_no').get((req,res,next)=>{
+    Courses.findOne({name:req.params.name})
+    .then((course)=>{
+        let l= course.subjects.length;
+        let i=0;
+        name=[];
+        for(i=0;i<l;i++){
+            if(course.subjects[i].subject_type=='Core' && course.subjects[i].subject_branch==req.params.b_name && course.subjects[i].subject_semester==req.params.s_no){
+                name.push({subject_name:course.subjects[i].subject_name});
+                
+            }
+            
+        }
+        res.status(200).json(name);
+    },(err)=>next(err))
+    .catch((err)=>next(err))
+})
+
+courseRouter.route('/get-optional-subjects/:name&:b_name&:s_no').get((req,res,next)=>{
+    Courses.findOne({name:req.params.name})
+    .then((course)=>{
+        let l= course.subjects.length;
+        let i=0;
+        name=[];
+        for(i=0;i<l;i++){
+            if(course.subjects[i].subject_type=='Optional' && course.subjects[i].subject_branch==req.params.b_name && course.subjects[i].subject_semester==req.params.s_no){
+                name.push({subject_name:course.subjects[i].subject_name});
+            }
+            
+        }
+        res.status(200).json(name);
+    },(err)=>next(err))
+    .catch((err)=>next(err))
+})
 
 module.exports= courseRouter;
