@@ -7,6 +7,7 @@ const { options } = require('./courseRouter');
 const studentRouter = express.Router();
 studentRouter.use(bodyParser.json());
 const multer = require('multer');
+const path = require('path');
 
 
 const filestorage = multer.diskStorage({
@@ -36,7 +37,15 @@ studentRouter.route('/get-all').get((req,res,next)=>{
 studentRouter.route('/get-one').get((req,res,next)=>{
     Students.findOne({_id:req.query.id})
     .then((std)=>{
-        res.status(200).json(std);
+        res.status(200).json(std)
+    },(err)=>next(err))
+    .catch((err)=>next(err))
+})
+
+studentRouter.route('/get-image').get((req,res,next)=>{
+    Students.findOne({_id:req.query.id})
+    .then((std)=>{
+        res.status(200).sendFile(path.join(__dirname, "../public/images/"+std.image));
     },(err)=>next(err))
     .catch((err)=>next(err))
 })
@@ -78,6 +87,13 @@ studentRouter.route('/add-student').post(upload.single('image'),(req,res,next)=>
             res.status(200).json(std);
         },(err)=>next(err))
         .catch((err)=>next(err))
+})
+studentRouter.route('/add-subjects').post((req,res,next)=>{
+    Students.findByIdAndUpdate(req.query.id,req.body).then(
+        (std)=>{
+            res.status(200).json(std);
+        },(err)=>next(err)
+    ).catch((err)=>next(err))
 })
 
 studentRouter.route('/del-student').delete((req,res,next)=>{
