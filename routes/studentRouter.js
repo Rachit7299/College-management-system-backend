@@ -6,9 +6,35 @@ const config = require('../config');
 const { options } = require('./courseRouter');
 const studentRouter = express.Router();
 studentRouter.use(bodyParser.json());
+const multer = require('multer');
+studentRouter.use(express.static(__dirname+"./public/"))
+
+const storage = multer.diskStorage({
+    destination: "/public/images",
+    filename: (req, file, cb) => {
+        cb(null, file.originalname)
+    }
+});
+
+const imageFileFilter = (req, file, cb) => {
+    if(!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
+        return cb(new Error('You can upload only image files!'), false);
+    }
+    cb(null, true);
+};
+
+const upload = multer({ storage: storage, fileFilter: imageFileFilter});
 
 studentRouter.route('/get-all').get((req,res,next)=>{
     Students.find({})
+    .then((std)=>{
+        res.status(200).json(std);
+    },(err)=>next(err))
+    .catch((err)=>next(err))
+})
+
+studentRouter.route('/get-one').get((req,res,next)=>{
+    Students.findOne({_id:req.query.id})
     .then((std)=>{
         res.status(200).json(std);
     },(err)=>next(err))
@@ -45,7 +71,7 @@ studentRouter.route('/get-searched').get((req,res,next)=>{
     .catch((err)=>next(err))
 })
 
-studentRouter.route('/add-student').post((req,res,next)=>{
+studentRouter.route('/add-student').post(upload.single('image'),(req,res,next)=>{
     Students.create(req.body).then(
         (std)=>{
             res.status(200).json(std);

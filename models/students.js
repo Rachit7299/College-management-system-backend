@@ -87,6 +87,9 @@ const studentSchema = new Schema({
         type:String,
         required:true,
         default: 'Not Paid'
+    },
+    image:{
+        type:String
     }
 }, {
     timestamps:true
