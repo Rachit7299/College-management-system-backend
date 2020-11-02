@@ -7,10 +7,9 @@ const { options } = require('./courseRouter');
 const studentRouter = express.Router();
 studentRouter.use(bodyParser.json());
 const multer = require('multer');
-studentRouter.use(express.static(__dirname+"./public/"))
 
 const storage = multer.diskStorage({
-    destination: "/public/images",
+    destination: "./public/images",
     filename: (req, file, cb) => {
         cb(null, file.originalname)
     }
