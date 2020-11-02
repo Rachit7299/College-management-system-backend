@@ -7,10 +7,10 @@ const { options } = require('./courseRouter');
 const studentRouter = express.Router();
 studentRouter.use(bodyParser.json());
 const multer = require('multer');
-studentRouter.use(express.static(__dirname+"./public/"))
 
-const storage = multer.diskStorage({
-    destination: "/public/images",
+
+const filestorage = multer.diskStorage({
+    destination: "./public/images",
     filename: (req, file, cb) => {
         cb(null, file.originalname)
     }
@@ -23,7 +23,7 @@ const imageFileFilter = (req, file, cb) => {
     cb(null, true);
 };
 
-const upload = multer({ storage: storage, fileFilter: imageFileFilter});
+const upload = multer({ storage: filestorage, fileFilter: imageFileFilter});
 
 studentRouter.route('/get-all').get((req,res,next)=>{
     Students.find({})
@@ -72,6 +72,7 @@ studentRouter.route('/get-searched').get((req,res,next)=>{
 })
 
 studentRouter.route('/add-student').post(upload.single('image'),(req,res,next)=>{
+    req.body.image=req.file.filename;
     Students.create(req.body).then(
         (std)=>{
             res.status(200).json(std);
