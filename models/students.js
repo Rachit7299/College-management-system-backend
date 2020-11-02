@@ -14,78 +14,60 @@ const subjectSchema = new Schema({
 const studentSchema = new Schema({
     name:{
         type:String,
-        required: true
     },
     email:{
         type:String,
-        required: true
     },
     mobile:{
         type: Number,
-        required: true,
     },
     course:{
         type:String,
-        required:true,
     },
     branch:{
         type: String,
-        required: true
     },
     std_no:{
         type: Number,
-        required: true,
         unique: true
     },
     dob:{
         type:Date,
-        required: true
     },
     gender:{
         type:String,
-        required: true
     },
     year:{
         type:Number,
-        required:true
     },
     semester:{
         type:Number,
-        required:true
     },    
     core_subjects:[subjectSchema],
     optional_subjects:[subjectSchema],
     address:{
         type:String,
-        required: true
     },
     city:{
         type:String,
-        required: true
     },    
     fatherName:{
         type:String,
-        required: true,
     },
     motherName:{
         type:String,
-        required: true,
     },
     fatherOccupation:{
         type:String,
-        required: true,
     },
     motherOccupation:{
         type:String,
-        required: true,
     },
     hostler:{
-        type:String,
-        required: true,        
+        type:String,       
     },
     feeStatus:{
         type:String,
-        required:true,
         default: 'Not Paid'
     },
     image:{
