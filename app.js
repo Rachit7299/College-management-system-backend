@@ -10,6 +10,8 @@ var userRouter = require('./routes/userRouter');
 var feeRouter = require('./routes/feeRouter');
 var courseRouter = require('./routes/courseRouter');
 var studentRouter = require('./routes/studentRouter');
+var timeTableRouter = require('./routes/timeTableRouter');
+var noticeRouter = require('./routes/noticeRouter');
 var cors = require('cors');
 var app = express();
 const connect = mongoose.connect("mongodb+srv://Rachit:Rachit123@cluster0.72h9y.mongodb.net/collegeServer?retryWrites=true&w=majority",{ useNewUrlParser: true ,'useFindAndModify': false});
@@ -39,8 +41,10 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/user', userRouter);
 app.use('/fees',feeRouter);
-app.use('/courses',courseRouter)
-app.use('/students', studentRouter)
+app.use('/courses',courseRouter);
+app.use('/students', studentRouter);
+app.use('/time-table', timeTableRouter);
+app.use('/notice',noticeRouter);
 
 
 // catch 404 and forward to error handler
