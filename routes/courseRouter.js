@@ -242,4 +242,20 @@ courseRouter.route('/get-optional-subjects/:name&:b_name&:s_no').get((req,res,ne
     .catch((err)=>next(err))
 })
 
+
+courseRouter.route('/get-count-all').get((req,res,next)=>{
+    Courses.find({}).then((courses)=>{
+        let x = courses.length;
+        let i=0;
+        let y=0;
+        let z=0;
+        for(i=0;i<x;i++){
+            y=y+courses[i].branches.length;
+            z=z+courses[i].subjects.length;
+        }
+        res.status(200).json({course:x,branch:y,subject:z});
+    },(err)=>next(err))
+    .catch((err)=>next(err))
+})
+
 module.exports= courseRouter;

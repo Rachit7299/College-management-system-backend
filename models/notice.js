@@ -19,9 +19,6 @@ const NoticeSchema = new mongoose.Schema({
     },
     docLink: {
         type: String
-    },
-    lastdate: {
-        type: Date
     }
 }, { timestamps: true });
 

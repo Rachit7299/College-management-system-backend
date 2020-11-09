@@ -43,7 +43,7 @@ noticeRouter.route('/add-notice').post(upload.single('docLink'),(req,res,next)=>
 })
 
 noticeRouter.route('/get-notices').get((req,res,next)=>{
-    Notices.find(option).sort({createdAt: -1}).then((std)=>{
+    Notices.find({}).sort({createdAt: -1}).then((std)=>{
         res.status(200).json(std)
     },(err)=>next(err))
     .catch((err)=>next(err))

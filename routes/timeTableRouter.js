@@ -59,4 +59,11 @@ timeTableRouter.route('/get-filter').get((req,res,next)=>{
     .catch((err)=>next(err))
 })
 
+timeTableRouter.route('/get-count').get((req,res,next)=>{
+    Tables.countDocuments({}).then((c)=>{
+        res.status(200).json(c);
+    },(err)=>next(err))
+    .catch((err)=>next(err))
+})
+
 module.exports = timeTableRouter;

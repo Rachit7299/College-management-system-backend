@@ -83,4 +83,11 @@ userRouter.route("/register").post((req, res, next) => {
     ).catch((err)=>next(err));
   })
 
+  userRouter.route('/get-count').get((req,res,next)=>{
+    Users.countDocuments({}).then((c)=>{
+        res.status(200).json(c);
+    },(err)=>next(err))
+    .catch((err)=>next(err))
+})
+
   module.exports=userRouter;

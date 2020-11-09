@@ -112,4 +112,11 @@ studentRouter.route('/update-student').patch((req,res,next)=>{
         .catch((err)=>next(err))
 })
 
+studentRouter.route('/get-count').get((req,res,next)=>{
+    Students.countDocuments({}).then((c)=>{
+        res.status(200).json(c);
+    },(err)=>next(err))
+    .catch((err)=>next(err))
+})
+
 module.exports= studentRouter;
